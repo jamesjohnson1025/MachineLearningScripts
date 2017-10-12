@@ -20,12 +20,16 @@ def clean_data(data):
 
 
 def createXMatrix(columnNames,data):
-    return data.as_matrix(columnNames)
+    data_tmp = data.as_matrix(columnNames)
+    return np.concatenate([np.ones((data_tmp.shape[0],1)),data_tmp],axis=1)
 
 def createYMatrix(columnName,data): 
     target = data[columnName].values
     return target.reshape(target.shape[0],1)
-    
+
+def plot(X,y):
+    plt.scatter(X,y)
+    plt.show() 
 
 
 if __name__ == '__main__':
@@ -38,7 +42,9 @@ if __name__ == '__main__':
    data = clean_data(data_train)
    xMatrix = createXMatrix(predictors,data)
    yMatrix = createYMatrix('Survived',data)
+   print xMatrix.shape
    print yMatrix.shape
+   plot(xMatrix,yMatrix) 
 
 
 
